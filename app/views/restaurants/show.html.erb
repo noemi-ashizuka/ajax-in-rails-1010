@@ -2,14 +2,17 @@
 <p><%= @restaurant.address %></p>
 
 <h2><%= pluralize @restaurant.reviews.size, "review" %></h2>
-<div>
-  <% if @restaurant.reviews.blank? %>
-    <p>Be the first to write a review!</p>
-  <% else %>
-    <% @restaurant.reviews.each do |review| %>
-      <p><%= review.content %></p>
+<div data-controller="insert-in-list">
+  <div data-insert-in-list-target="items">
+    <% if @restaurant.reviews.blank? %>
+      <p>Be the first to write a review!</p>
+    <% else %>
+      <% @restaurant.reviews.each do |review| %>
+        <%= render "reviews/review", review: review  %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
 
+  <%= render "reviews/form", restaurant: @restaurant, review: @review %>
+</div>
 <%= link_to "Back", restaurants_path %>
